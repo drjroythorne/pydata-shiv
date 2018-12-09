@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package pydata_shiv;
+
+message PredictionRequest {
+  string text = 1;
+}
+
+
+message Prediction {
+  enum Label {
+    YES = 0;
+    NO = 1;
+  }
+
+  Label label = 1;
+  float confidence = 2;
+}
+
+service PredictionService {
+  rpc Predict (PredictionRequest) returns (Prediction) {}
+}

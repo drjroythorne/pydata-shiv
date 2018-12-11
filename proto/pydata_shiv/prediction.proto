@@ -6,7 +6,6 @@ message PredictionRequest {
   string text = 1;
 }
 
-
 message Prediction {
   enum Label {
     YES = 0;

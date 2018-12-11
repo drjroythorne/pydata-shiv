@@ -13,7 +13,7 @@ async def run():
 
     while(True):
         try:
-            response = await stub.Predict(PredictionRequest(text='Contract text'), timeout=5)
+            response = await stub.Predict(PredictionRequest(text='Contract text'), timeout=2)
             print(Prediction.Label.Name(response.label), response.confidence)
         except asyncio.TimeoutError:
             print('Timed out')

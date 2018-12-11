@@ -10,15 +10,15 @@ COPY . .
 RUN pip install shiv
 RUN python setup.py bdist_wheel
 #ENV SHIV_INTERPRETER /usr/local/bin/python
-RUN shiv -c trlarry -o dist/larry_server dist/trlarry-0.0.1-py3-none-any.whl
+RUN shiv -c pydata_shiv_server -o dist/pydata_shiv_server dist/pydata_shiv-0.0.1-py3-none-any.whl
 
 
 FROM python:3.7-slim
 WORKDIR /usr/bin
-COPY --from=0 /usr/src/dist/larry_server .
+COPY --from=0 /usr/src/dist/pydata_shiv_server .
 RUN mkdir .shiv
-RUN chmod +x larry_server
+RUN chmod +x pydata_shiv_server
 ENV SHIV_ROOT /usr/bin/.shiv
 EXPOSE 50051
-CMD ["./larry_server"]
+CMD ["./pydata_shiv_server"]
 

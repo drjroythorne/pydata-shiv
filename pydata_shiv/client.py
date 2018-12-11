@@ -2,21 +2,25 @@ import asyncio
 
 from grpclib.client import Channel
 
-from .larry_pb2 import LarryPredictionRequest, LarryPrediction
-from .larry_grpc import LarryProcessorStub
+from .prediction_pb2 import PredictionRequest, Prediction
+from .prediction_grpc import PredictionServiceStub
 
 
-async def main():
+async def run():
     loop = asyncio.get_event_loop()
     channel = Channel('127.0.0.1', 50051, loop=loop)
-    stub = LarryProcessorStub(channel)
+    stub = PredictionServiceStub(channel)
 
     while(True):
         try:
-            response = await stub.Predict(LarryPredictionRequest(text='Contract text'), timeout=4)
-            print(LarryPrediction.LarryLabel.Name(response.label), response.confidence)
+            response = await stub.Predict(PredictionRequest(text='Contract text'), timeout=5)
+            print(Prediction.Label.Name(response.label), response.confidence)
         except asyncio.TimeoutError:
             print('Timed out')
-        
+      
+def main_entrypoint():
+    asyncio.run(run())
+
 if __name__ == '__main__':
-    asyncio.run(main())
+    main_entrypoint()
+    
